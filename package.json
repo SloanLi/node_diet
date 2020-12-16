@@ -1,0 +1,30 @@
+{
+  "name": "node_diet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "concurrently --handle-input \"wait-on ./dist/app.js && nodemon\" \"tsc -w -p tsconfig.build.json\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SloanLi/node_diet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SloanLi/node_diet/issues"
+  },
+  "homepage": "https://github.com/SloanLi/node_diet#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.11.6",
+    "nodemon": "^2.0.6",
+    "ts-node": "^9.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.2"
+  }
+}
