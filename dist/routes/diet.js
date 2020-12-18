@@ -4,12 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const user_1 = __importDefault(require("../controller/user"));
+const diet_1 = __importDefault(require("../controller/diet"));
 const router = express_1.default.Router();
-const user = new user_1.default();
-router.get('/getOpenId', user.getOpenId);
-router.post('/post', user.postUser);
-router.put('/put', user.putUser);
-router.get('/get', user.getUser);
-router.delete('/delete', user.deleteUser);
+const diet = new diet_1.default();
+router.post('/post', diet.postDiet);
+router.put('/put', diet.putDiet);
+router.get('/get', diet.getDiet);
+router.delete('/delete', diet.deleteDiet);
 exports.default = router;

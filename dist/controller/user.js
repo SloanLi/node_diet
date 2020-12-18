@@ -14,15 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = __importDefault(require("../service/user"));
 const user_2 = __importDefault(require("../model/user"));
-const mongoose = require('mongoose');
-var querystring = require('querystring');
 const authService = new user_1.default();
-const user = mongoose.model('user', user_2.default);
 class UserController {
     constructor() {
-        this.queryUser = this.queryUser.bind(this);
         this.postUser = this.postUser.bind(this);
         this.getOpenId = this.getOpenId.bind(this);
+        this.putUser = this.putUser.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
+        this.getUser = this.getUser.bind(this);
     }
     getOpenId(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -39,38 +38,64 @@ class UserController {
     postUser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             const userData = req.body;
-            if (!userData.userId) {
-                userData.userId = (Math.random() * 100000).toFixed(0);
-            }
             try {
-                const queryResult = yield this.queryUser({ userName: userData.userName });
-                if (queryResult.length < 0) {
-                    const addUserData = new user(userData);
-                    addUserData.save(function (err, data) {
-                        if (err) {
-                            res.send({ success: false, message: '创建失败', code: 200, data: {}, error: err });
-                        }
-                        res.send({ success: true, message: '创建成功', code: 200, data, error: {} });
-                    });
+                const queryResult = yield user_2.default.find({ openId: userData.openId });
+                if (queryResult.length === 0) {
+                    const addUserData = new user_2.default(userData);
+                    const data = yield addUserData.save();
+                    res.send({ success: true, message: '创建成功', code: 200, data, error: {} });
                 }
                 else {
                     res.send({ success: false, message: '重复数据，创建失败', code: 200, data: {}, error: {} });
                 }
             }
             catch (error) {
-                console.log(error);
-                res.send({ success: false, message: '创建失败', code: 200, data: {} });
+                res.send({ success: false, message: '创建失败', code: 200, data: {}, error });
             }
         });
     }
-    queryUser(data) {
+    putUser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
+            const userData = req.body;
+            if (!userData._id) {
+                res.send({ success: false, message: '修改失败', code: 200, data: {}, error: '_id不能为空' });
+            }
             try {
-                const result = yield user.findOne(data);
-                return Promise.resolve(result);
+                const updateResult = yield user_2.default.findOneAndUpdate({ _id: userData._id }, { $set: userData }, { upsert: true, new: true, useFindAndModify: false });
+                res.send({ success: false, message: "修改成功", code: 200, data: updateResult });
             }
             catch (error) {
-                return Promise.reject(error);
+                res.send({ success: false, message: "修改失败", code: 200, data: {} });
+            }
+        });
+    }
+    getUser(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const userId = req.query.id;
+            if (!userId) {
+                res.send({ success: false, message: '查询失败', code: 200, data: {}, error: 'userId不能为空' });
+            }
+            try {
+                const data = yield user_2.default.findOne({ _id: userId });
+                res.send({ success: true, message: '查询成功', code: 200, data, error: {} });
+            }
+            catch (error) {
+                res.send({ success: false, message: '查询失败', code: 200, data: {}, error });
+            }
+        });
+    }
+    deleteUser(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const userId = req.query.id;
+            if (!userId) {
+                res.send({ success: false, message: '修改失败', code: 200, data: {}, error: 'userId不能为空' });
+            }
+            try {
+                const data = yield user_2.default.deleteOne({ userId: userId });
+                res.send({ success: true, message: '删除失败', code: 200, data, error: {} });
+            }
+            catch (error) {
+                res.send({ success: false, message: '删除失败', code: 200, data: {}, error });
             }
         });
     }

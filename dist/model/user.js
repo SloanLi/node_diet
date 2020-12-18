@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require('mongoose');
 const userModel = mongoose.Schema({
-    userId: String,
+    openId: String,
     userName: String,
     height: Number,
     weight: Number,
@@ -10,4 +10,4 @@ const userModel = mongoose.Schema({
     type: Number,
     age: Number
 });
-exports.default = userModel;
+exports.default = mongoose.model('user', userModel);

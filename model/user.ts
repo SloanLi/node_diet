@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 const userModel=mongoose.Schema({
-    userId:String,
+    openId:String,
     userName:String,
     height:Number,
     weight:Number,
@@ -8,4 +8,4 @@ const userModel=mongoose.Schema({
     type:Number,
     age:Number
 })
-export default userModel
+export default mongoose.model('user',userModel)
