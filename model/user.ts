@@ -1,5 +1,6 @@
-const mongoose=require('mongoose')
-const userModel=mongoose.Schema({
+const mongoose = require('mongoose');
+// eslint-disable-next-line new-cap
+const userModel = mongoose.Schema({
     openId:String,
     userName:String,
     height:Number,
@@ -7,5 +8,5 @@ const userModel=mongoose.Schema({
     bmi:Number,
     type:Number,
     age:Number
-})
-export default mongoose.model('user',userModel)
+});
+export default mongoose.model('user', userModel);

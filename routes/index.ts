@@ -1,8 +1,7 @@
-import UserRouter from './user'
-import DietRouter from './diet'
+import UserRouter from './user';
+import DietRouter from './diet';
 
 export default (app:any) => {
-	app.use('/user',UserRouter);
-	app.use('/diet',DietRouter);
-
-}
+    app.use('/user', UserRouter);
+    app.use('/diet', DietRouter);
+};

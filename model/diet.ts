@@ -1,5 +1,6 @@
-const mongoose=require('mongoose')
-const dietModel=mongoose.Schema({
+const mongoose = require('mongoose');
+// eslint-disable-next-line new-cap
+const dietModel = mongoose.Schema({
     dietName:String,
     count:Number,
     totalCalorie:Number,
@@ -7,5 +8,5 @@ const dietModel=mongoose.Schema({
     avgCalorie:Number,
     userId:String,
     creatDate:String
-})
-export default mongoose.model('diet',dietModel)
+});
+export default mongoose.model('diet', dietModel);

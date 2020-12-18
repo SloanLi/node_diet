@@ -25,7 +25,7 @@ class UserController {
     }
     getOpenId(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const code = req.query.code;
+            const { code } = req.query;
             try {
                 const data = yield authService.getOpenID(code);
                 res.send(data);
@@ -43,14 +43,20 @@ class UserController {
                 if (queryResult.length === 0) {
                     const addUserData = new user_2.default(userData);
                     const data = yield addUserData.save();
-                    res.send({ success: true, message: '创建成功', code: 200, data, error: {} });
+                    res.send({
+                        success: true, message: '创建成功', code: 200, data, error: {},
+                    });
                 }
                 else {
-                    res.send({ success: false, message: '重复数据，创建失败', code: 200, data: {}, error: {} });
+                    res.send({
+                        success: false, message: '重复数据，创建失败', code: 200, data: {}, error: {},
+                    });
                 }
             }
             catch (error) {
-                res.send({ success: false, message: '创建失败', code: 200, data: {}, error });
+                res.send({
+                    success: false, message: '创建失败', code: 200, data: {}, error,
+                });
             }
         });
     }
@@ -58,14 +64,20 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             const userData = req.body;
             if (!userData._id) {
-                res.send({ success: false, message: '修改失败', code: 200, data: {}, error: '_id不能为空' });
+                res.send({
+                    success: false, message: '修改失败', code: 200, data: {}, error: '_id不能为空',
+                });
             }
             try {
                 const updateResult = yield user_2.default.findOneAndUpdate({ _id: userData._id }, { $set: userData }, { upsert: true, new: true, useFindAndModify: false });
-                res.send({ success: false, message: "修改成功", code: 200, data: updateResult });
+                res.send({
+                    success: false, message: '修改成功', code: 200, data: updateResult,
+                });
             }
             catch (error) {
-                res.send({ success: false, message: "修改失败", code: 200, data: {} });
+                res.send({
+                    success: false, message: '修改失败', code: 200, data: {},
+                });
             }
         });
     }
@@ -73,14 +85,20 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             const userId = req.query.id;
             if (!userId) {
-                res.send({ success: false, message: '查询失败', code: 200, data: {}, error: 'userId不能为空' });
+                res.send({
+                    success: false, message: '查询失败', code: 200, data: {}, error: 'userId不能为空',
+                });
             }
             try {
                 const data = yield user_2.default.findOne({ _id: userId });
-                res.send({ success: true, message: '查询成功', code: 200, data, error: {} });
+                res.send({
+                    success: true, message: '查询成功', code: 200, data, error: {},
+                });
             }
             catch (error) {
-                res.send({ success: false, message: '查询失败', code: 200, data: {}, error });
+                res.send({
+                    success: false, message: '查询失败', code: 200, data: {}, error,
+                });
             }
         });
     }
@@ -88,14 +106,20 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             const userId = req.query.id;
             if (!userId) {
-                res.send({ success: false, message: '修改失败', code: 200, data: {}, error: 'userId不能为空' });
+                res.send({
+                    success: false, message: '修改失败', code: 200, data: {}, error: 'userId不能为空',
+                });
             }
             try {
-                const data = yield user_2.default.deleteOne({ userId: userId });
-                res.send({ success: true, message: '删除失败', code: 200, data, error: {} });
+                const data = yield user_2.default.deleteOne({ userId });
+                res.send({
+                    success: true, message: '删除失败', code: 200, data, error: {},
+                });
             }
             catch (error) {
-                res.send({ success: false, message: '删除失败', code: 200, data: {}, error });
+                res.send({
+                    success: false, message: '删除失败', code: 200, data: {}, error,
+                });
             }
         });
     }

@@ -24,59 +24,83 @@ class DietController {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.query.userId;
             if (!id) {
-                res.send({ success: false, message: '查询失败', code: 200, data: {}, error: { message: '用户ID不能为空' } });
+                res.send({
+                    success: false, message: '查询失败', code: 200, data: {}, error: { message: '用户ID不能为空' },
+                });
             }
             try {
                 const data = yield diet_1.default.find({ userId: id });
-                res.send({ success: true, message: '成功', code: 200, data, error: {} });
+                res.send({
+                    success: true, message: '成功', code: 200, data, error: {},
+                });
             }
             catch (error) {
-                res.send({ success: false, message: '失败', code: 200, data: {}, error });
+                res.send({
+                    success: false, message: '失败', code: 200, data: {}, error,
+                });
             }
         });
     }
     postDiet(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const body = req.body;
+            const { body } = req;
             if (!body.userId) {
-                res.send({ success: false, message: '添加失败，用户ID缺失', code: 200, data: {}, error: {} });
+                res.send({
+                    success: false, message: '添加失败，用户ID缺失', code: 200, data: {}, error: {},
+                });
             }
             try {
                 const data = yield new diet_1.default(body).save();
-                res.send({ success: true, message: '添加成功', code: 200, data, error: {} });
+                res.send({
+                    success: true, message: '添加成功', code: 200, data, error: {},
+                });
             }
             catch (error) {
-                res.send({ success: false, message: '添加失败', code: 200, data: {}, error });
+                res.send({
+                    success: false, message: '添加失败', code: 200, data: {}, error,
+                });
             }
         });
     }
     putDiet(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const body = req.body;
+            const { body } = req;
             if (!body._id) {
-                res.send({ success: false, message: '修改失败', code: 200, data: {}, error: 'Id不能为空' });
+                res.send({
+                    success: false, message: '修改失败', code: 200, data: {}, error: 'Id不能为空',
+                });
             }
             try {
                 const data = yield diet_1.default.findOneAndUpdate({ _id: body._id }, { $set: body }, { upsert: true, new: true, useFindAndModify: false });
-                res.send({ success: false, message: "修改成功", code: 200, data });
+                res.send({
+                    success: false, message: '修改成功', code: 200, data,
+                });
             }
             catch (error) {
-                res.send({ success: false, message: "修改失败", code: 200, data: {} });
+                res.send({
+                    success: false, message: '修改失败', code: 200, data: {},
+                });
             }
         });
     }
     deleteDiet(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const id = req.query.id;
+            const { id } = req.query;
             if (!id) {
-                res.send({ success: false, message: '修改失败', code: 200, data: {}, error: 'id不能为空' });
+                res.send({
+                    success: false, message: '修改失败', code: 200, data: {}, error: 'id不能为空',
+                });
             }
             try {
                 const data = yield diet_1.default.deleteOne({ _id: id });
-                res.send({ success: true, message: '删除成功', code: 200, data, error: {} });
+                res.send({
+                    success: true, message: '删除成功', code: 200, data, error: {},
+                });
             }
             catch (error) {
-                res.send({ success: false, message: '删除失败', code: 200, data: {}, error });
+                res.send({
+                    success: false, message: '删除失败', code: 200, data: {}, error,
+                });
             }
         });
     }
